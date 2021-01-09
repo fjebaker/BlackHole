@@ -18,7 +18,7 @@ module __ef
     ϕθϕ(m, pos) = cos(pos[3]) / sin(pos[3])
 
     function geodesic(pos, vel, m)
-        [
+        (
             # μ=t
             - 1 * (
                 ttt(m, pos) * vel[1]^2 
@@ -44,7 +44,7 @@ module __ef
                 ϕrϕ(m, pos) * vel[2] * vel[4]
                 + ϕθϕ(m, pos) * vel[3] * vel[4]
             )
-        ]
+        )
     end
 
     function constrain(m, r, dϕ)
