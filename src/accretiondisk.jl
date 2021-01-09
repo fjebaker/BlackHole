@@ -17,30 +17,30 @@ end
 end
 
 
-function transform(x, y, z, d::AccretionDisk)
+function transform(x, y, z, α, β)
     y, z = (
-        y * cos(d.β) - z * sin(d.β),
-        z * cos(d.β) + y * sin(d.β)
+        y * cos(β) - z * sin(β),
+        z * cos(β) + y * sin(β)
     )
 
     (
-        x * cos(d.α) - z * sin(d.α), 
+        x * cos(α) - z * sin(α), 
         y, 
-        z * cos(d.α) + x * sin(d.α)
+        z * cos(α) + x * sin(α)
     )
 end
 
-function calcintersect(g, d::AccretionDisk, intensity::Function)
+function calcintersect(g, d::AccretionDisk, β, intensity::Function)
     x, y, z = g.curve[:, begin]
     z = 0 # rounding errors in ODE solve
-    x, y, z = transform(x, y, z, d)
+    x, y, z = transform(x, y, z, d.α, d.β + β)
     
     mapfoldl(
         (index) -> begin
             x2, y2, z2 = g.curve[:, index]
             z2 = 0
             radius = sqrt(x2^2 + y2^2 + z2^2)
-            x2, y2, z2 = transform(x2, y2, z2, d)
+            x2, y2, z2 = transform(x2, y2, z2, d.α, d.β + β)
             
             ret = intensity(
                 x, y, z, x2, y2, z2, radius
@@ -59,7 +59,7 @@ end
 
 intersection(g, d::AccretionDisk) = error("Not implemented for disk type.")
 
-function intersection(g::Geodesic, d::GeometricDisk)
+function intersection(g::Geodesic, d::GeometricDisk, β)
 
     intensity(x, y, z, x2, y2, z2, r) = begin 
         ret = zeros(Float64, 3)
@@ -75,5 +75,5 @@ function intersection(g::Geodesic, d::GeometricDisk)
         ret
     end
 
-    calcintersect(g, d, intensity)
+    calcintersect(g, d, β, intensity)
 end
