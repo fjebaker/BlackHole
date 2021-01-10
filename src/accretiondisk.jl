@@ -59,7 +59,7 @@ end
 
 intersection(g, d::AccretionDisk) = error("Not implemented for disk type.")
 
-function intersection(g::Geodesic, d::GeometricDisk, β)
+function intersection(g, d::GeometricDisk, β)
 
     intensity(x, y, z, x2, y2, z2, r) = begin 
         ret = zeros(Float64, 3)

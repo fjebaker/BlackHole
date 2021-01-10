@@ -9,7 +9,7 @@ end
 
 function render_column(
     d::AccretionDisk, 
-    geodesics::AbstractArray{<:Geodesic},
+    geodesics::AbstractArray,
     height::Int,
     fov_index::Int,
     x::Int
@@ -35,7 +35,7 @@ end
 
 function renderdisk(
     d::AccretionDisk,
-    geodesics::AbstractArray{<:Geodesic}
+    geodesics::AbstractArray
     ;
     height::Int=720,
     width::Int=1080,

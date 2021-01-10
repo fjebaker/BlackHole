@@ -1,5 +1,7 @@
 using DifferentialEquations
+
 import Plots: plot!, plot
+import Base: axes, getindex, size
 
 struct Geodesic{T}
     curve::Array{Float64, 2}
@@ -20,6 +22,10 @@ struct Geodesic{T}
         )...))
     end
 end
+
+axes(g::Geodesic, i::Int) = axes(g.curve, i)
+getindex(g::Geodesic, i...) = getindex(g.curve, i)
+size(g::Geodesic) = size(g.curve)
 
 getgeodesic(s::Singularity) = error("Not defined for $s !")
 getintfunc(s::Singularity) = error("Not defined for $s !")
