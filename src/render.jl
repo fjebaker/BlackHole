@@ -25,7 +25,7 @@ function render_column(
         r = sqrt(x^2 + (y-mid)^2) # distance from middle of image
         i = convert(
             Int,
-            trunc(1 + r / fov_index * n)
+            round(1 + r / fov_index * n)
         )
         if i < n
             res[height-y, :] .= intersection(geodesics[i], d, β)

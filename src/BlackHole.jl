@@ -8,10 +8,14 @@ Includes are order sensitive
 """
 
 include("geodesics.jl")
+include("coordinates.jl")
 
 include("eddingtonfinkelstein.jl")
+
 include("accretiondisk.jl")
+include("disks/geometric.jl")
+include("disks/opticallythin.jl")
+
 include("render.jl")
 
-#export EddingtonFinkelstein, calcgeodesics, plot!, GeometricDisk, intersection, renderdisk
 end
