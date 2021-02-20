@@ -27,7 +27,7 @@ function calcintersect(g, d::AccretionDisk, β, intensity::Function)
             radius = sqrt(x2^2 + y2^2 + z2^2)
             x2, y2, z2 = transform(x2, y2, z2, d.α, d.β + β)
             
-            ret = intensity(
+            ret = intensity( # messy
                 t, x, y, z, t2, x2, y2, z2, radius
             )
 

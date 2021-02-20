@@ -74,8 +74,8 @@ function intersection(g, d::OpticallyThinDisk, β)
                         dθ, sqrt(dr^2 + dϕ^2)
                     )
 
-                    # thickness
-                    thickness = 40 * profile(r, d) / sin(abs(θ_width))
+                    # thickness, with ~magic~ constant
+                    thickness = 3 * profile(r, d) / sin(abs(θ_width))
 
                     ret[1] = thickness
                     ret[2] = thickness
