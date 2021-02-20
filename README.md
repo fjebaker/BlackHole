@@ -1,9 +1,9 @@
 # Black Hole
 
-![Example Render](examples/blackhole.png)
+![Example Render](examples/thindisk.png)
 
 
-Black Hole simulation work written in Julia.
+Black Hole rendering work written in Julia.
 
 Project is work in progress. I used SageMath to calculate the symbolic expressions for the Christoffel symbols of the Eddington-Finkelstein metric, and then hard-coded the non-zero components as Julia functions, which are then used for a geodesic ray-tracing approach to rendering accretion disks around a black hole.
 
