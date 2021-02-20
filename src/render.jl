@@ -57,3 +57,5 @@ function renderdisk(
 
     data
 end
+
+export renderdisk

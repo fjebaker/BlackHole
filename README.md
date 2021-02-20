@@ -17,13 +17,13 @@ Project is work in progress. I used SageMath to calculate the symbolic expressio
 s = EddingtonFinkelstein(2.0)
 
 geodesics = calcgeodesics(
-    s; 
+    s, 
     num=1000, 
     Δϕ=0.005
 )
 
 disk = GeometricDisk(
-    α=π/3, 
+    α=π/10, 
     β=0.0, 
     rinner=12,
     router=44

@@ -84,3 +84,6 @@ function intersection(g, d::GeometricDisk, β)
 
     calcintersect(g, d, β, intensity)
 end
+
+
+export GeometricDisk, intersection

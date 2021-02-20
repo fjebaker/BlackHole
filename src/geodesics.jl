@@ -74,3 +74,6 @@ function calcgeodesics(s::Singularity; num::Int=1000, Δϕ::Float64=0.005)
 
     map(mapper, 0:num)
 end
+
+
+export calcgeodesics

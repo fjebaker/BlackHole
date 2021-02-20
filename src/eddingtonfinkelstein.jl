@@ -77,3 +77,4 @@ function getconstraint(s::EddingtonFinkelstein)
     __ef.constrain
 end
 
+export EddingtonFinkelstein
