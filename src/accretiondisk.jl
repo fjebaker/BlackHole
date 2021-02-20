@@ -1,5 +1,7 @@
 using Parameters: @with_kw
 
+""" Structure Definitions """
+
 @with_kw struct GeometricDisk <: AccretionDisk
     α::Float64
     β::Float64  
@@ -16,6 +18,8 @@ end
     profile::Function
 end
 
+
+""" Helper Functions """
 
 function transform(x, y, z, α, β)
     y, z = (
@@ -56,6 +60,9 @@ function calcintersect(g, d::AccretionDisk, β, intensity::Function)
         init=zeros(Float64, 3)
     )
 end
+
+
+""" Exported Functions """
 
 intersection(g, d::AccretionDisk) = error("Not implemented for disk type.")
 

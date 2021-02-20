@@ -1,4 +1,7 @@
 module __ef
+    """ 
+    Christoffel Components and Geodesic Equation for Eddington Finkelstein metric
+    """
     ttt(m, pos) = 2 * m^2 / pos[2]^3
     ttr(m, pos) = (2 * m^2 + m * pos[2]) / pos[2]^3
     trr(m, pos) = 2 * (m^2 + m * pos[2]) / pos[2]^3
@@ -18,6 +21,7 @@ module __ef
     ϕθϕ(m, pos) = cos(pos[3]) / sin(pos[3])
 
     function geodesic(pos, vel, m)
+        """ Returns components of the Euler-Lagrange (Geodesic) equation """
         (
             # μ=t
             - 1 * (
@@ -48,6 +52,7 @@ module __ef
     end
 
     function constrain(m, r, dϕ)
+        """ Calculates time component such that vector (t, r, θ=0, ϕ) is light-like """
         (sqrt(
                 -(2 * m * r - r^2) * dϕ^2 + 1
             ) * r - 2 * m

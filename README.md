@@ -17,7 +17,7 @@ Project is work in progress. I used SageMath to calculate the symbolic expressio
 s = EddingtonFinkelstein(2.0)
 
 geodesics = calcgeodesics(
-    s, 
+    s; 
     num=1000, 
     Δϕ=0.005
 )
