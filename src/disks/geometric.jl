@@ -11,7 +11,7 @@ end
 
 function intersection(g, d::GeometricDisk, β)
 
-    intensity(x, y, z, x2, y2, z2, r) = begin 
+    intensity(t, x, y, z, t2, x2, y2, z2, r) = begin 
         ret = zeros(Float64, 3)
         if d.rinner < r < d.router
             if z != z2 # no divide by zero thanks

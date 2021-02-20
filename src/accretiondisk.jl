@@ -28,7 +28,7 @@ function calcintersect(g, d::AccretionDisk, β, intensity::Function)
             x2, y2, z2 = transform(x2, y2, z2, d.α, d.β + β)
             
             ret = intensity(
-                x, y, z, x2, y2, z2, radius
+                t, x, y, z, t2, x2, y2, z2, radius
             )
 
             # update state
