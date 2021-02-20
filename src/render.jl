@@ -1,6 +1,7 @@
 
 
 function truncator(px)
+    """ Clamps value of px between 0 and 255 """
     convert(
         UInt8, 
         trunc(min(max(0, px), 255))
@@ -56,3 +57,5 @@ function renderdisk(
 
     data
 end
+
+export renderdisk

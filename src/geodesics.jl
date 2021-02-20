@@ -24,7 +24,7 @@ struct Geodesic{T}
 end
 
 axes(g::Geodesic, i::Int) = axes(g.curve, i)
-getindex(g::Geodesic, i...) = getindex(g.curve, i)
+getindex(g::Geodesic, i...) = getindex(g.curve, i...)
 size(g::Geodesic) = size(g.curve)
 
 getgeodesic(s::Singularity) = error("Not defined for $s !")
@@ -51,7 +51,7 @@ function stopintegration!(integrator)
     terminate!(integrator)
 end
 
-function calcgeodesics(s::Singularity, num::Int=1000, Δϕ::Float64=0.005)
+function calcgeodesics(s::Singularity; num::Int=1000, Δϕ::Float64=0.005)
     i_x = Vector{Float64}([0, 100, π/2, 0])
     i_v = Vector{Float64}([0, -1, 0, 0])
     λ_span = (0.0, 300.0)
@@ -74,3 +74,6 @@ function calcgeodesics(s::Singularity, num::Int=1000, Δϕ::Float64=0.005)
 
     map(mapper, 0:num)
 end
+
+
+export calcgeodesics

@@ -23,7 +23,7 @@ geodesics = calcgeodesics(
 )
 
 disk = GeometricDisk(
-    α=π/3, 
+    α=π/10, 
     β=0.0, 
     rinner=12,
     router=44
