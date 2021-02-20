@@ -18,12 +18,12 @@ s = EddingtonFinkelstein(2.0)
 
 geodesics = calcgeodesics(
     s, 
-    num=1000, 
-    Δϕ=0.005
+    num=3000, 
+    Δϕ=0.002
 )
 
 disk = GeometricDisk(
-    α=π/10, 
+    α=π/50, 
     β=0.0, 
     rinner=12,
     router=44
@@ -34,10 +34,23 @@ image = renderdisk(
     geodesics, 
     height=720, 
     width=1080,
-    fov_index=200    
+    fov_index=500    
 )
 
 # save image
 using Images
 save("render.png", image)
 ```
+
+For an optically thin disk, may use
+```julia
+disk = GaussianThinDisk(
+    α=π/50, 
+    β=0.0, 
+    rinner=12,
+    router=44,
+    s=s,
+    σ=4
+)
+```
+as a drop in replacement for `disk`.
