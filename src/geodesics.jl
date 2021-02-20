@@ -13,6 +13,7 @@ struct Geodesic{T}
             (λ) -> begin
                 t, r, θ, ϕ = sol(λ)
                 Float64[
+                    t, # store time
                     r * sin(θ) * cos(ϕ),
                     r * sin(θ) * sin(ϕ),
                     r * cos(θ)
@@ -76,4 +77,4 @@ function calcgeodesics(s::Singularity; num::Int=1000, Δϕ::Float64=0.005)
 end
 
 
-export calcgeodesics
+export calcgeodesics, plot!
