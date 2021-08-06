@@ -1,21 +1,17 @@
+"""
+BlackHole rendering library.
+"""
+
 module BlackHole
 
-abstract type Singularity end
-abstract type AccretionDisk end
+include("disks.jl")
+include("utils.jl")
 
-"""
-Includes are order sensitive
-"""
+include("metrics.jl")
 
 include("geodesics.jl")
-include("coordinates.jl")
 
-include("eddingtonfinkelstein.jl")
-
-include("accretiondisk.jl")
-include("disks/geometric.jl")
-include("disks/opticallythin.jl")
-
-include("render.jl")
+include("gpu.jl")
+include("rendering.jl")
 
 end
