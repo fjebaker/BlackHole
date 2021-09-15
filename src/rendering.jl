@@ -1,5 +1,5 @@
 function render_column!(
-    column_view::AbstractArray{<:Number},
+    column_view,
     x::Int,
     geodesics::AbstractArray{<:Number},
     disk::AccretionDisk,
@@ -17,7 +17,7 @@ function render_column!(
         index = convert(Int, round(1 + r / fov * n))
 
         if index < n
-            value = intersection(disk, geodesics[:, :, index], β)
+            value = intersection(disk, @view(geodesics[:, :, index]), β)
             @. column_view[height-y, :] = truncator(value)
         end
     end
@@ -48,7 +48,7 @@ function renderdisk(
 
     mid_width = width ÷ 2
 
-    for x = (-mid_width):(mid_width-1)
+    Threads.@threads for x = (-mid_width):(mid_width-1)
         render_column!(
             @view(image_out[:, x+mid_width+1, :]),
             x,
@@ -81,14 +81,14 @@ rendering functions are executed in parallel on the CPU.
 function renderdisk(
     disk::AccretionDisk,
     geodesics::AbstractArray{<:Number};
-    width::Int = 480,
-    height::Int = 720,
+    width::Int = 720,
+    height::Int = 480,
     fov::Int = 200,
 )
     if CUDA.has_cuda_gpu()
-        return renderdisk(:gpu, geodesics, width, height, fov, disk)
+        return renderdisk(:gpu, disk, geodesics, width, height, fov)
     else
-        return renderdisk(:cpu, geodesics, width, height, fov, disk)
+        return renderdisk(:cpu, disk, geodesics, width, height, fov)
     end
 end
 

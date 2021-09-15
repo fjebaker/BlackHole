@@ -4,10 +4,11 @@ BlackHole rendering library.
 
 module BlackHole
 
+include("metrics.jl")
+
 include("disks.jl")
 include("utils.jl")
 
-include("metrics.jl")
 
 include("geodesics.jl")
 
