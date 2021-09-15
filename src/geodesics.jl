@@ -38,8 +38,8 @@ end
 
 Method for unpacking the integration solutions into a standardised 3-dimensional array.
 The array is guarunteed to give the same number of indexes per solution, by interpolating
-a fixed number of points (fixed to `640` for technical reasons) between the start and end
-time of the integrator.
+a fixed number of points (fixed to `640` for technical reasons related to GPU warp 
+configurations) between the start and end time of the integrator.
 
 The ouput array has dimensions `4 x 640 x length(solutions)`.
 """
@@ -52,7 +52,7 @@ function unpack(solutions::Vector{OrdinaryDiffEq.ODECompositeSolution})::Array{F
     maxlength::Int64 = 640
 
     # allocate output matrix
-    output::Array{Float64, 3} = zeros(Float64, (4, maxlength, length(solutions)))
+    output::Array{Float64,3} = zeros(Float64, (4, maxlength, length(solutions)))
 
     # use lazy foreach in J1.6
     Iterators.foreach(enumerate(solutions)) do (ind, sol)
@@ -102,7 +102,7 @@ significantly.
 """
 function calcgeodesics(
     s::Singularity;
-    num::Int = 1000,
+    num::Int = 1300,
     Δϕ::Float64 = 0.004,
 )::Array{Float64,3}
     x₀ = SA_F64[0.0, 100.0, π/2.0, 0.0]  # static array
@@ -128,3 +128,7 @@ function calcgeodesics(
 
     unpack(solutions)
 end
+
+
+# module exports
+export calcgeodesics

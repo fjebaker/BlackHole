@@ -25,7 +25,7 @@ function kernel_index_calculator(
     width::Int,
     height::Int,
     fov::Int,
-    num_geodesics::Int
+    num_geodesics::Int,
 )
     # which pixel does this thread work on
     i = threadIdx().x + blockDim().x * (blockIdx().x - 1)
@@ -153,13 +153,13 @@ function kernel_geodesic_render(
     # offset into the array from the geoindex
     offset = 4 * step_num * (geoindex - 1)
 
-    ind1::Int = (4 * (thread-1)) + 1 + offset # thread
-    ind2::Int = (4 * thread    ) + 1 + offset # thread + 1
+    ind1::Int = (4 * (thread - 1)) + 1 + offset # thread
+    ind2::Int = (4 * thread) + 1 + offset # thread + 1
 
     # retrieve distant points first, so we can check if we're actually in the disk
-    x2 = geo_matrix[ind2 + 1]
-    y2 = geo_matrix[ind2 + 2]
-    z2 = geo_matrix[ind2 + 3]
+    x2 = geo_matrix[ind2+1]
+    y2 = geo_matrix[ind2+2]
+    z2 = geo_matrix[ind2+3]
 
     radius = sqrt(x2^2 + y2^2 + z2^2)
 
@@ -172,9 +172,9 @@ function kernel_geodesic_render(
         sinβ = sin(β)
         sinα = sin(α)
 
-        x1 = geo_matrix[ind1 + 1]
-        y1 = geo_matrix[ind1 + 2]
-        z1 = geo_matrix[ind1 + 3]
+        x1 = geo_matrix[ind1+1]
+        y1 = geo_matrix[ind1+2]
+        z1 = geo_matrix[ind1+3]
 
         # transform into the plane of the disk
         # only calculate components we need
@@ -202,7 +202,7 @@ function kernel_geodesic_render(
 
         if ind ≤ elements && ind + d ≤ elements
             # sum over shared values
-            @inbounds shared[ind] = shared[ind] + shared[ind + d]
+            @inbounds shared[ind] = shared[ind] + shared[ind+d]
         end
 
         d *= 2
@@ -216,19 +216,44 @@ function kernel_geodesic_render(
     return nothing
 end
 
+
+
+@doc raw"""
+    renderdisk(
+        ::Val{:gpu},
+        geodesics::AbstractArray{<:Number},
+        width::Int,
+        height::Int,
+        fov::Int,
+        disk::AccretionDisk
+    )
+
+Dispatch method for rendering the disk using the GPU.
+
+# Extended help
+    
+The kernel launch configuration is hard-coded
+into this function, which launches two kernels: `kernel_index_calculator` and `kernel_geodesic_render`.
+See the documentation of these individual functions for more details.
+"""
 function renderdisk(
     ::Val{:gpu},
     geodesics::AbstractArray{<:Number},
     width::Int,
     height::Int,
     fov::Int,
-    disk::AccretionDisk
+    disk::AccretionDisk,
 )
     β_store = CUDA.zeros(Float64, (height, width))
     outimage = similar(β_store, Int64)
 
     CUDA.@sync @cuda threads = 1024 blocks = cld(length(outimage), 1024) kernel_index_calculator(
-        outimage, β_store, width, height, fov, size(geodesics, 3)
+        outimage,
+        β_store,
+        width,
+        height,
+        fov,
+        size(geodesics, 3),
     )
 
     β_store .+= disk.β
@@ -244,5 +269,5 @@ function renderdisk(
         size(geodesics, 3),
     )
 
-    cat(outimage, outimage, outimage; dims=3)
+    cat(outimage, outimage, outimage; dims = 3)
 end
