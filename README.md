@@ -16,33 +16,18 @@ Project is work in progress. I used SageMath to calculate the symbolic expressio
 ```julia
 s = EddingtonFinkelstein(2.0)
 
-geodesics = calcgeodesics(
-    s, 
-    num=3000, 
-    Δϕ=0.002
-)
+geodesics = calcgeodesics(s)
 
-disk = GeometricDisk(
-    α=π/50, 
-    β=0.0, 
-    rinner=12,
-    router=44
-)
+disk = GeometricDisk()
 
-image = renderdisk(
-    disk,
-    geodesics, 
-    height=720, 
-    width=1080,
-    fov_index=500    
-)
+image = renderdisk(g, geodesics, width=720, height=480)
 
 # save image
 using Images
 save("render.png", image)
 ```
 
-For an optically thin disk, may use
+For an optically thin disk, may use something like
 ```julia
 disk = GaussianThinDisk(
     α=π/50, 
@@ -53,4 +38,4 @@ disk = GaussianThinDisk(
     σ=4
 )
 ```
-as a drop in replacement for `disk`.
+as a drop in replacement for `disk`. Note, there is currently no GPU support for the optically thin disks.
