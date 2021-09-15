@@ -221,11 +221,11 @@ end
 @doc raw"""
     renderdisk(
         ::Val{:gpu},
+        disk::AccretionDisk,
         geodesics::AbstractArray{<:Number},
         width::Int,
         height::Int,
         fov::Int,
-        disk::AccretionDisk
     )
 
 Dispatch method for rendering the disk using the GPU.
@@ -238,11 +238,11 @@ See the documentation of these individual functions for more details.
 """
 function renderdisk(
     ::Val{:gpu},
+    disk::AccretionDisk,
     geodesics::AbstractArray{<:Number},
     width::Int,
     height::Int,
     fov::Int,
-    disk::AccretionDisk,
 )
     β_store = CUDA.zeros(Float64, (height, width))
     outimage = similar(β_store, Int64)

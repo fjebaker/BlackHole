@@ -110,4 +110,4 @@ end
 
 
 # module exports
-export Singularity, EddingtonFinkelstein, geodesic
+export Singularity, EddingtonFinkelstein
